@@ -37,10 +37,17 @@ public class EnemyAIBasic : EnemyAI
         currentPath = pathfinder.FindPath(body.transform.position, enemy.transform.position);
         targetIndex = 0;
 
-        if (enemy == null || (enemy.transform.position - body.transform.position).magnitude > visibleDistance)
+        if (enemy == null)
         {
             SetInitialGoal();
             return;
+        } else {
+            float distance = (enemy.transform.position - body.transform.position).magnitude;
+            if ( distance > visibleDistance)
+            {
+                currentGoal = new AIGoal(AIGoalType.WAIT, body.gameObject, (distance - visibleDistance) * 0.2f);
+                return;
+            }
         }
         switch (currentGoal.goalType)
         {
@@ -51,7 +58,7 @@ public class EnemyAIBasic : EnemyAI
                 currentGoal = new AIGoal(AIGoalType.CHASE, enemy, 0.25f);
                 return;
             case AIGoalType.ATTACK:
-                currentGoal = new AIGoal(AIGoalType.WAIT, body.gameObject, 2.0f);
+                currentGoal = new AIGoal(AIGoalType.WAIT, body.gameObject, 1.0f);
                 return;
             default:
                 currentGoal = new AIGoal(AIGoalType.CHASE, enemy, 0.25f);
@@ -72,10 +79,19 @@ public class EnemyAIBasic : EnemyAI
     {
         GameObject enemy = GameObject.Find("Player");
 
-        if (enemy == null || (enemy.transform.position - body.transform.position).magnitude > visibleDistance)
+        if (enemy == null)
         {
             SetInitialGoal();
             return;
+        }
+        else
+        {
+            float distance = (enemy.transform.position - body.transform.position).magnitude;
+            if (distance > visibleDistance)
+            {
+                currentGoal = new AIGoal(AIGoalType.WAIT, body.gameObject, (distance - visibleDistance) * 0.2f);
+                return;
+            }
         }
         switch (currentGoal.goalType)
         {

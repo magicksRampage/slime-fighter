@@ -13,8 +13,7 @@ public class ActionBar : MonoBehaviour
     Vector2 initialScale;
     public int maxValue;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         renderer = GetComponent<SpriteRenderer>();
         mask = GetComponentInChildren<SpriteMask>();

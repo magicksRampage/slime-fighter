@@ -7,7 +7,7 @@ using UnityEngine;
 public class HPDrop : MonoBehaviour
 {
 
-    int value = 1;
+    public int value = 1;
 
     public SlimeTrail trail;
 
