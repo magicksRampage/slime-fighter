@@ -99,11 +99,30 @@ public abstract class SlimeFighter : MonoBehaviour
         {
             renderer.color = baseColor;
         }
+
+        if (stamina > maxStamina)
+        {
+            stamina = maxStamina;
+        }
+        
+        if (stamina < 0)
+        {
+            stamina = 0;
+        }
+
+        if (hp > maxHp)
+        {
+            float overflow = hp - maxHp;
+
+            hp = maxHp + overflow * (float)Math.Pow(0.5f, Time.deltaTime / 5);
+            DisplayHP();
+        }
     }
 
     public void Heal(int amount)
     {
         hp += amount;
+        stamina += amount / 100.0f;
 
 
         DisplayHP();
@@ -171,7 +190,7 @@ public abstract class SlimeFighter : MonoBehaviour
         }
 
 
-        stunned = 1.0f;
+        stunned = 0.5f;
         invincible = 1.0f;
     }
 

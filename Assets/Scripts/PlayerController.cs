@@ -38,7 +38,7 @@ public class PlayerController : SlimeFighter
         
         CommonUpdate();
 
-        stamina += Time.deltaTime;
+        stamina += 0.8f * Time.deltaTime;
 
         if (stamina > maxStamina)
         {
