@@ -14,16 +14,19 @@ public abstract class SlimeWeapon : MonoBehaviour
     public float centralForce = 1.0f;
     public float centralDampening = 1.0f;
     public int baseDamage = 1;
+    public AudioClip audioSwing;
 
     protected float timeThrust = 0;
     protected float goalDistance;
 
     protected SlimeFighter wielder;
+    protected AudioSource audioSource;
 
     // Start is called before the first frame update
     protected void CommonStart()
     {
         physics2d = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
         goalDistance = initialDistance;
 
         wielder = GetComponentInParent<SlimeFighter>();
@@ -68,6 +71,8 @@ public abstract class SlimeWeapon : MonoBehaviour
     public void Thrust()
     {
         timeThrust = 1.0f;
+        audioSource.PlayOneShot(audioSwing);
+
     }
 
     public void Swing(Vector2 targetDirection, Vector2 outDirection)
@@ -85,5 +90,6 @@ public abstract class SlimeWeapon : MonoBehaviour
 
 
         physics2d.AddForce(activeSwing * outPerp * perpForce * physics2d.mass, ForceMode2D.Impulse);
+        audioSource.PlayOneShot(audioSwing);
     }
 }

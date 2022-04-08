@@ -35,6 +35,10 @@ public class WeaponController : SlimeWeapon
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
 
         CommonUpdate();
 
@@ -58,6 +62,7 @@ public class WeaponController : SlimeWeapon
 
                 player.stamina -= staminaCostThrust * chargeTime;
                 player.staminaBar.SetValue((int)Mathf.Floor(player.stamina));
+                audioSource.PlayOneShot(audioSwing, timeThrust / maxThrust);
 
             }
             ResetCharge();
@@ -70,6 +75,7 @@ public class WeaponController : SlimeWeapon
 
                 player.stamina -= staminaCostSwing * chargeTime;
                 player.staminaBar.SetValue((int)Mathf.Floor(player.stamina));
+                audioSource.PlayOneShot(audioSwing, staminaCostSwing * chargeTime / player.maxStamina);
             }
             ResetCharge();
         }
@@ -98,7 +104,7 @@ public class WeaponController : SlimeWeapon
             flashFactor = 0.5f;
         }
 
-        renderer.color = new Color(1 - chargeFactor, 1, 1 - chargeFactor, flashFactor);
+        renderer.color = new Color(1 - 0.8f * chargeFactor, 1 , 1 - 0.4f * chargeFactor, flashFactor);
     }
 
     void ResetCharge()

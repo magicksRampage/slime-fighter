@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Hazard : MonoBehaviour
 {
+
+    AudioSource audioSource;
+
     public int baseDamage = 20;
+    public AudioClip burnClip;
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -24,6 +28,7 @@ public class Hazard : MonoBehaviour
         if (fighter && !fighter.IsInvincible)
         {
             fighter.Damage(baseDamage);
+            audioSource.PlayOneShot(burnClip);
         }
     }
 }

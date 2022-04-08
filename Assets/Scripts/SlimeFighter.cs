@@ -25,7 +25,8 @@ public abstract class SlimeFighter : MonoBehaviour
     public Color invColor;
 
     protected Rigidbody2D physics2d;
-    new protected SpriteRenderer renderer;
+    protected SpriteRenderer renderer;
+    protected AudioSource audioSource;
 
     public SlimeWeapon weapon;
 
@@ -38,11 +39,14 @@ public abstract class SlimeFighter : MonoBehaviour
     public ActionBar actionHealthBar;
     public ActionBar actionStaminaBar;
 
+    public AudioClip clipSplat;
+
     // Start is called before the first frame update
     protected void CommonStart()
     {
         physics2d = GetComponent<Rigidbody2D>();
         renderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
 
         stamina = maxStamina;
 
@@ -177,6 +181,7 @@ public abstract class SlimeFighter : MonoBehaviour
 
             SplatterEffect splatterScript = splatterObject.GetComponent<SplatterEffect>();
             splatterScript.SetColor(renderer.color);
+            audioSource.PlayOneShot(clipSplat);
         }
     }
 
