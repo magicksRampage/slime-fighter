@@ -191,6 +191,7 @@ public abstract class SlimeFighter : MonoBehaviour
         DisplayHP();
         if (hp <= 0)
         {
+            OnDeath();
             Destroy(gameObject);
         }
 
@@ -202,6 +203,11 @@ public abstract class SlimeFighter : MonoBehaviour
     abstract protected bool WeaponIsEnemy(SlimeWeapon slimeWeapon);
 
     abstract protected void DisplayHP();
+
+    protected virtual void OnDeath()
+    {
+
+    }
 
     protected void Move(Vector2 move)
     {

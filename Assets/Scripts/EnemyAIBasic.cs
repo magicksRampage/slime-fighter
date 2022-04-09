@@ -34,21 +34,22 @@ public class EnemyAIBasic : EnemyAI
     {
         GameObject enemy = GameObject.Find("Player");
 
-        currentPath = pathfinder.FindPath(body.transform.position, enemy.transform.position);
-        targetIndex = 0;
-
         if (enemy == null)
         {
             SetInitialGoal();
             return;
-        } else {
-            float distance = (enemy.transform.position - body.transform.position).magnitude;
-            if ( distance > visibleDistance)
-            {
-                currentGoal = new AIGoal(AIGoalType.WAIT, body.gameObject, (distance - visibleDistance) * 0.2f);
-                return;
-            }
         }
+
+        currentPath = pathfinder.FindPath(body.transform.position, enemy.transform.position);
+        targetIndex = 0;
+
+        float distance = (enemy.transform.position - body.transform.position).magnitude;
+        if (distance > visibleDistance)
+        {
+            currentGoal = new AIGoal(AIGoalType.WAIT, body.gameObject, (distance - visibleDistance) * 0.2f);
+            return;
+        }
+
         switch (currentGoal.goalType)
         {
             case AIGoalType.WAIT:

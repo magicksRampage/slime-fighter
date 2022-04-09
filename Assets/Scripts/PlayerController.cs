@@ -15,6 +15,9 @@ public class PlayerController : SlimeFighter
     
     public UIStaminaBar staminaBar;
     public UIHealthBar healthBar;
+
+    public MenuOverlay winMenu;
+    public MenuOverlay loseMenu;
     
     // Start is called before the first frame update
     void Start()
@@ -63,6 +66,11 @@ public class PlayerController : SlimeFighter
 
         staminaBar.SetValue((int)Mathf.Floor(stamina));
         actionStaminaBar.SetValue(stamina);
+
+        if (FindObjectsOfType<EnemyController>().Length == 0)
+        {
+            winMenu.Show();
+        }
         
     }
 
@@ -91,6 +99,14 @@ public class PlayerController : SlimeFighter
         actionHealthBar.SetValue(hp);
 
         gameObject.transform.localScale = CurrentScale * initialScale;
+    }
+
+    protected override void OnDeath()
+    {
+        if (!winMenu.gameObject.activeInHierarchy)
+        {
+            loseMenu.Show();
+        }
     }
 
 }
